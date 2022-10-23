@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Contracts\FileInterface;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\FileMassiveRequest;
 use App\Http\Requests\FileRequest;
 use App\Models\File;
 use Illuminate\Http\Request;
@@ -15,9 +17,14 @@ class FileController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct(FileInterface $repository)
+    {
+        $this->repository = $repository;
+    }
+
     public function index()
     {
-        //
+        return $this->repository->index();
     }
 
     /**
@@ -28,30 +35,12 @@ class FileController extends Controller
      */
     public function store(FileRequest $request)
     {
+        return $this->repository->store($request);
+    }
 
-
-        // $getNameFile = $file->getClientOriginalName();
-
-        // $getNameFile = pathinfo($getNameFile, PATHINFO_FILENAME);
-
-        // $nameFile = str_replace(" ", "-", $getNameFile);
-
-        // $fileExtension = $file->getClientOriginalExtension();
-
-        // $nameFile = $nameFile.'.'.$fileExtension;
-
-        // $file->storeAs(
-        //     'plugins/'.$plugiFolder, $nameFile
-        // );
-
-        // return $nameFile;
-
-       /*  $photo->storeAs(
-            'users', $namePhoto
-        );
-
-        $user->photo = $namePhoto;
-        $user->save(); */
+    public function storeMassiveFiles(FileMassiveRequest $request)
+    {
+        return $this->repository->storeMassiveFiles($request);
     }
 
     /**
@@ -85,6 +74,6 @@ class FileController extends Controller
      */
     public function destroy(File $file)
     {
-        //
+        return $this->repository->destroy($file);
     }
 }

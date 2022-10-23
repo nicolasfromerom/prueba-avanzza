@@ -20,3 +20,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 })->middleware('throttle:3,1');
 
 Route::apiResource('file', FileController::class);
+Route::post('file-massive', [FileController::class, 'storeMassiveFiles']);

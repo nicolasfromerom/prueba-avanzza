@@ -2,6 +2,7 @@
 
 namespace App\Contracts;
 
+use App\Http\Requests\FileMassiveRequest;
 use App\Http\Requests\FileRequest;
 
 Interface FileInterface
@@ -10,6 +11,8 @@ Interface FileInterface
 
     public function store(FileRequest $request);
 
-    public function delete($file);
+    public function storeMassiveFiles(FileMassiveRequest $request);
+
+    public function destroy($file);
 
 }
