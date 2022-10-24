@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\FileController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -15,9 +16,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('throttle:3,1');
+Route::post('login',[AuthController::class,'login']);
 
-Route::apiResource('file', FileController::class);
-Route::post('file-massive', [FileController::class, 'storeMassiveFiles']);
+Route::apiResource('file', FileController::class)->except(['show','update'])->middleware(['throttle:3,1','auth:sanctum']);
+Route::post('file-massive', [FileController::class, 'storeMassiveFiles'])->middleware(['throttle:3,1','auth:sanctum']);
